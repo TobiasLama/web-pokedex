@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="pokedex.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        #pokemon-info {
+            margin-top: 20px;
+        }
+        .pokemon {
+            margin-top: 10px;
+        }
+        .controls {
+            margin-top: 10px;
+        }
+        .tooltip {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 5px;
+            z-index: 1000;
+            max-width: 200px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pokemon Search</h1>
+    <input type="text" id="pokemon-input" placeholder="Enter Pokemon name or ID">
+    <button id="search-button">Search</button>
+    <div id="pokemon-info"></div>
+    <canvas id="stats-chart" width="400" height="400"></canvas>
+
+    <script src="pokedex.js"></script>
+</body>
+</html>

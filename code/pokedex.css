@@ -1,0 +1,9 @@
+.pokemon > *
+{
+    font-size: 24px;
+}
+
+.pokemon > img
+{
+    filter: drop-shadow(0 5px 4px black);
+}
