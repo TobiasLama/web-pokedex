@@ -41,6 +41,31 @@ function fetchPokemonData(pokemon, pushState = true) {
         });
 }
 
+function setFavicon(pokemonIcon)
+{
+    if (pokemonIcon !== null) {
+        const favicon = document.getElementById("favicon");
+        if (favicon !== null)
+        {
+            console.log("Favicon found, updating source...")
+            favicon.href = pokemonIcon
+        }
+        else
+        {
+            console.log("Creating favicon")
+            newIcon = document.createElement('link');
+            newIcon.rel = 'icon';
+            newIcon.id = "favicon"
+            newIcon.href = pokemonIcon
+            document.head.appendChild(newIcon);
+        }
+    }
+    else
+    {
+        console.log("Sprite wasn't found.")
+    }
+}
+
 function displayPokemonData(pokemonData, speciesData) {
     const officialArtworkUrl = pokemonData.sprites.other['official-artwork'].front_default;
     const pkmnWeightKg = parseInt(pokemonData.weight) / 10;
@@ -154,6 +179,8 @@ function displayPokemonData(pokemonData, speciesData) {
             <h3>Moves learned by leveling up (Scarlet and Violet):</h3>
         </div>
     `;
+
+    setFavicon(smallSprite);
 
     pokemonInfoDiv.appendChild(movesTable);
     drawStatsChart(pokemonData.stats);
