@@ -1,0 +1,5 @@
+# Ignore CSS as it should be compiled from SASS/SCSS files
+css/
+
+# Ignore CSV data, only used for the script. Consider removing Python script in the future?
+data/csv/
