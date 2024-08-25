@@ -1,12 +1,8 @@
 # Script for creating an offline Pokedex database for searching
 # Data taken from Pokemon API's files
 
-# Interesting information you'd want:
-# Types
-
-#TO-DO:
-# Fix names with special symbols
-# E.g. Mr. Mime, Sirfetch'd, Type:Null
+# TODO: Fix names with special symbols, E.g. Mr. Mime, Sirfetch'd, Type:Null
+# TODO: Improve temporary fixes e.g. for Mimikyu instead of Mimikyu Disguised as name
 
 # LATER:
 # Multi-language support
@@ -24,17 +20,28 @@ with open('offline-pokedex.json', 'w') as jsonfile:
             if(int(row[0]) <= 1025):
                 curr_pkmn = {}
                 curr_pkmn["id"] = row[0]
+                # Remove hyphens from Pokemon names with spaces. The -o check is an edge case for Kommo-o.
+                curr_pkmn["apiLink"] = row[1]
                 if "-" in row[1] and "-o" not in row[1]:
                     full_name = ""
                     for i, name in enumerate(row[1].split("-")):
                         if i:
                             full_name += " "
                         full_name += name.capitalize()
-                    curr_pkmn["name"] = full_name
+                        # ! Temporary, clumsy fix; come up with a better solution later
+                        if name == "mr":
+                            full_name += "."
+                    # ! Temporary, clumsy fixes; come up with a better solution later
+                    if full_name == "Mimikyu Disguised":
+                        curr_pkmn["name"] = "Mimikyu"
+                    elif full_name == "Type Null":
+                        curr_pkmn["name"] = "Type:Null"
+                    else:
+                        curr_pkmn["name"] = full_name
                 else:
                     curr_pkmn["name"] = row[1].capitalize()
-                curr_pkmn["height-decimeter"] = row[3]
-                curr_pkmn["weight-hectogram"] = row[4]
+                curr_pkmn["heightDecimeter"] = row[3]
+                curr_pkmn["weightHectogram"] = row[4]
 
                 pkmn_json.append(curr_pkmn)
                 # if(int(row[0]) < 1025):

@@ -1,4 +1,4 @@
-document.getElementById('search-button').addEventListener('click', function() {
+    document.getElementById('search-button').addEventListener('click', function() {
     const pokemonNameOrId = document.getElementById('pokemon-input').value.toLowerCase().replace(" ", "-");
     fetchPokemonData(pokemonNameOrId);
 });
@@ -156,7 +156,8 @@ function displayPokemonData(pokemonData, speciesData) {
 
     flavorText = eligible_entries[Math.floor(Math.random() * eligible_entries.length)];
     let abilitiesText = []
-    let genusName = speciesData.genera[7].genus
+    let pkmnGeneration = speciesData.generation.name
+    let genusName = speciesData.genera.find(genusLang => genusLang.language["name"] === "en")["genus"]
     let smallSprite = pokemonData.sprites.versions["generation-viii"].icons.front_default
     console.log(smallSprite)
 
@@ -164,7 +165,7 @@ function displayPokemonData(pokemonData, speciesData) {
         <div class="pokemon">
         <h2 style='color:${speciesData.color.name};text-shadow: 0 0px 5px black;'>${capitalizeFirstLetter(pokemonData.name)} (${kanjiName}) #${pokedexNum}<img src=${smallSprite}></img></h2>            
             <p><i>The ${genusName} </i></p>
-            <p>${capitalizeFirstLetter(speciesData.generation.name)}</p>
+            <p>${capitalizeFirstLetter(pkmnGeneration)}</p>
             <img id="pokemon-image" src="${officialArtworkUrl}" alt="${pokemonData.name}">
             <p><i>${flavorText.flavor_text.replace(/[\x00-\x1F\x7F-\x9F]/g, ' ')}</i> - Pokemon ${capitalizeFirstLetter(flavorText.version.name).replace("-", " ")}</p>
             <p>Height: ${pkmnHeightMeters} m</p>
