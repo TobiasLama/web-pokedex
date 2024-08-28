@@ -1,4 +1,11 @@
+// * Hoo boy, this document is getting kinda chaotic
+// * Refactoring:
+    // ! Better names
+    // ! More concise functions
+    // ! Less dumb code
+
 let pkmnArray = []
+let sortCriterion = "id"
 
 async function loadOfflineDex()
 {
@@ -14,8 +21,8 @@ async function loadOfflineDex()
         }
     }, error => console.error(error.message))
     .then(responseJSON => {
-        console.log(responseJSON);
-        console.log(responseJSON[0])
+        // console.log(responseJSON);
+        // console.log(responseJSON[0])
         pkmnArray = responseJSON
 
         displaySearchResults(pkmnArray)
@@ -24,7 +31,6 @@ async function loadOfflineDex()
 
 function displaySearchResults(inputArray)
 {
-    console.log("Calling displaySearchResults");
     const resultsDiv = document.getElementById("search-results");
     resultsDiv.replaceChildren();
 
@@ -35,10 +41,9 @@ function displaySearchResults(inputArray)
             currPkmnName = currPkmnJSON.name
 
             currPkmnLink = document.createElement("a");
-            console.log(`${currPkmnJSON.apiLink}`)
             
             currPkmnLink.setAttribute("href", `pokedex-view.html?pokemon=${currPkmnJSON.apiLink}`);
-            currPkmnLink.innerHTML = currPkmnName;
+            currPkmnLink.innerHTML = `${currPkmnName} #${currPkmnJSON.id}`;
 
             currPkmnHTML.append(currPkmnLink);
             resultsDiv.append(currPkmnHTML);
@@ -71,7 +76,6 @@ function searchForPkmn()
         {
             for (type of types)
             {
-                console.log(pkmnObject.types)
                 matchesFilter &&= pkmnObject.types.includes(type.value.toLowerCase());
             }
         }
@@ -80,6 +84,38 @@ function searchForPkmn()
     }
 
     const searchResults = pkmnArray.filter(pkmnFilter)
+    searchResults.sort(
+        (a,b) => {
+            const currCriterion = document.getElementById("sort-select").value
+            if(currCriterion === "id")
+            {
+                a[currCriterion] - b[currCriterion]
+            }
+            else
+            {
+                if(a[currCriterion] > b[currCriterion])
+                {
+                    return 1
+                }
+                else if (b[currCriterion] > a[currCriterion])
+                {
+                    return -1
+                }
+                return 0
+            }
+    }
+    );
+
+    let currentSortOrder = document.querySelector('input[name="sort-order"]:checked').id
+
+    if(currentSortOrder !== "asc")
+    {
+        //(alert("changing")
+        searchResults.reverse();
+    };
+    lastSortOrder = document.querySelector('input[name="sort-order"]:checked').id;
+
+
     console.log(`Search results: ${searchResults.length}`)
     displaySearchResults(searchResults)
 }
@@ -116,3 +152,16 @@ window.onload = (event) => {
     loadOfflineDex();
     document.getElementById("search-button").onclick = searchForPkmn;
 };
+
+document.getElementById("sort-select").onchange = (
+    (event) =>
+    {
+        searchForPkmn();
+    }
+)
+
+for(sortOrderRadio of document.querySelectorAll('[name="sort-order"]')) {
+    sortOrderRadio.onchange = function() {
+        searchForPkmn();
+    }
+}

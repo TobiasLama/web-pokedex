@@ -26,7 +26,25 @@
             <option value="8">VIII</option>
             <option value="9">IX</option>
         </select>
-    </div>        
+    </div>     
+    <br>
+    <div id="sort-options">
+        Sort by:
+        <select id="sort-select">
+            <option id="sort-id" value="id" selected>Id No.</option>
+            <option id="sort-name" value="name">Name</option>
+            <option id="sort-weight" value="weightHectogram">Weight</option>
+            <option id="sort-height" value="heightDecimeter">Height</option>
+        </select>
+        <fieldset>
+        <legend>Sort order: </legend>
+            <label for="asc">Ascending</label>
+            <input type="radio" id="asc" name="sort-order" checked>
+            <label for="desc">Descending</label>
+            <input type="radio" id="desc" name="sort-order">
+        </fieldset>
+    </div>   
+    <br>
     <button id="search-button">Search</button>
     <h2>Search results:</h2>
     <ul id="search-results">
